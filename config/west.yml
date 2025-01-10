@@ -1,0 +1,56 @@
+# forked from https://github.com/urob/zmk-config/blob/9f386d209657a1aefc625633bda13f5a091ea465/config/west.yml
+# and https://github.com/a741725193/zmk-sofle/blob/53a89e7553fc973ee2d429626aaa0d8b8e06af76/config/west.yml
+
+manifest:
+  defaults:
+    remote: urob
+    revision: v0.1
+
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    # Additional modules containing boards/shields/custom code can be listed here as well
+    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    - name: urob
+      url-base: https://github.com/urob
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: main
+      import: app/west.yml
+
+    - name: eyelash_sofle
+      url: https://github.com/a741725193/zmk-sofle
+      revision: main
+    - name: mario-peripheral-animation
+      url: https://github.com/GPeye/mario-peripheral-animation
+      revision: main
+
+    - name: zmk-adaptive-key
+      path: modules/zmk/adaptive-key
+    - name: zmk-auto-layer
+      path: modules/zmk/auto-layer
+    - name: zmk-helpers
+      path: modules/zmk/helpers
+    - name: zmk-leader-key
+      revision: v0.1+locality
+      path: modules/zmk/leader-key
+    - name: zmk-tri-state
+      path: modules/zmk/tri-state
+
+    - name: zephyr
+      revision: v3.5.0+zmk-fixes
+      clone-depth: 1
+      import:
+        # Only enable most commonly used boards. For less common hardware one
+        # may need to enable additional modules.
+        name-allowlist:
+          - cmsis
+          - hal_nordic
+          - hal_rpi_pico
+          - hal_stm32
+          - lvgl
+          - tinycrypt
+
+  self:
+    path: config
